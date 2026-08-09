@@ -32,13 +32,16 @@ FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
 
 --------------Total Session-----------------
 
-SELECT 
-    COUNT(DISTINCT
-        (SELECT value.int_value
-        FROM UNNEST(event_params)
-        WHERE key = 'ga_session_id'
-    ))
-    AS total_sessions
+SELECT
+  COUNT(DISTINCT CONCAT(
+    user_pseudo_id,
+    '-',
+    CAST((
+      SELECT value.int_value
+      FROM UNNEST(event_params)
+      WHERE key = 'ga_session_id'
+    ) AS STRING)
+  )) AS total_sessions
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
 
 ---------------Total Purchase----------------
@@ -57,22 +60,21 @@ WHERE event_name = 'page_view';
 
 ---------------Total New Users-----------------
 
-SELECT 
-    COUNT(*) AS total_new_users
+SELECT
+  COUNT(DISTINCT user_pseudo_id) AS total_new_users
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
 WHERE event_name = 'first_visit';
 
 ---------------Total Returning users---------------
 
-SELECT 
-    COUNT(DISTINCT user_pseudo_id) AS returning_users
+SELECT
+  COUNT(DISTINCT user_pseudo_id) AS returning_users
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
-WHERE event_name = 'session_start'
-AND user_pseudo_id NOT IN(
-    SELECT DISTINCT user_pseudo_id
-    FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
-    WHERE event_name ='first_visit'
-)
+WHERE user_pseudo_id NOT IN (
+  SELECT DISTINCT user_pseudo_id
+  FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+  WHERE event_name = 'first_visit'
+);
 
 ---------------Top 10 Event Types---------------
 

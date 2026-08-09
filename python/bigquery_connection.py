@@ -12,4 +12,10 @@ def bigquery_client():
 
 if __name__ == "__main__":
     client = bigquery_client()
-    print(f"BigQuery connection successful: {client.project}")
+    query = """SELECT COUNT(*) AS total_rows
+               FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+            """
+    result =client.query(query).result()
+    for rows in result:
+        print(f"Total Rows: {rows.total_rows}")
+        
