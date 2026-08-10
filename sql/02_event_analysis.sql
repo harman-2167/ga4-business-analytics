@@ -66,55 +66,54 @@ ROUND(COUNT(DISTINCT CASE
     END),2) AS overall_purchase_conversion_rate
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
 
-------------------FUNNEL DROP OFF ANALYSIS-------------------
+------------------ FULL FUNNEL ANALYSIS ------------------
 
-SELECT
-    COUNT(DISTINCT CASE
-        WHEN event_name = 'view_item'
-        THEN user_pseudo_id
-    END) AS view_users,
-
-    COUNT(DISTINCT CASE
-        WHEN event_name = 'add_to_cart'
-        THEN user_pseudo_id
-    END) AS add_to_cart_users,
-
-    COUNT(DISTINCT CASE
-        WHEN event_name = 'view_item'
-        THEN user_pseudo_id
-    END)
-    -
-    COUNT(DISTINCT CASE
-        WHEN event_name = 'add_to_cart'
-        THEN user_pseudo_id
-    END) AS users_dropped,
-    ROUND((
-    COUNT(DISTINCT CASE
-        WHEN event_name = 'view_item'
-        THEN user_pseudo_id
-        END)
-            -
-        COUNT(DISTINCT CASE
-            WHEN event_name = 'add_to_cart'
-            THEN user_pseudo_id
-        END)
-        ) * 100.0
-        /
+WITH funnel AS (
+    SELECT
         COUNT(DISTINCT CASE
             WHEN event_name = 'view_item'
-            THEN user_pseudo_id
-        END),
-        2
-    ) AS drop_off_rate
+            THEN user_pseudo_id END) AS view_users,
 
-FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
+        COUNT(DISTINCT CASE
+            WHEN event_name = 'add_to_cart'
+            THEN user_pseudo_id END) AS cart_users,
+
+        COUNT(DISTINCT CASE
+            WHEN event_name = 'begin_checkout'
+            THEN user_pseudo_id END) AS checkout_users,
+
+        COUNT(DISTINCT CASE
+            WHEN event_name = 'purchase'
+            THEN user_pseudo_id END) AS purchase_users
+    FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+)
+
+SELECT
+    view_users,
+    cart_users,
+    checkout_users,
+    purchase_users,
+
+    ROUND(SAFE_DIVIDE(cart_users, view_users) * 100, 2)
+        AS view_to_cart_rate,
+
+    ROUND(SAFE_DIVIDE(checkout_users, cart_users) * 100, 2)
+        AS cart_to_checkout_rate,
+
+    ROUND(SAFE_DIVIDE(purchase_users, checkout_users) * 100, 2)
+        AS checkout_to_purchase_rate,
+
+    ROUND(SAFE_DIVIDE(purchase_users, view_users) * 100, 2)
+        AS overall_purchase_rate
+
+FROM funnel;
 
 -------------------TOP PRODUCT BY REVENUE----------------------
 
 SELECT
     item.item_name AS product_name,
     SUM(item.price_in_usd * item.quantity) AS total_revenue,
-    SUM(item.quantity* item.quantity) AS total_quantity_sold
+    SUM(item.quantity) AS total_quantity_sold  
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
     UNNEST(items) AS item
 WHERE event_name = 'purchase'
@@ -128,7 +127,7 @@ LIMIT 20;
 SELECT 
     item.item_name AS product_name,
     SUM(item.quantity) AS total_quantity_sold,
-    SUM(item.price_in_usd) AS total_revenue
+    SUM(item.price_in_usd * item.quantity) AS total_revenue
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
 UNNEST(items) AS item
 WHERE event_name = 'purchase'   
@@ -137,46 +136,79 @@ ORDER BY total_quantity_sold
 DESC
 LIMIT 20;
 
-------------------REVENUE PER UNIT----------------------
+------------------ REVENUE PER UNIT ------------------
 
-SELECT 
+SELECT
     item.item_name AS product_name,
-    COUNTIF(event_name ='view_item') AS product_views,
-    COUNTIF(event_name ='purchase') AS purchase_events,
+
     SUM(
-        CASE 
+        CASE
             WHEN event_name = 'purchase'
             THEN item.quantity
             ELSE 0
         END
     ) AS units_sold,
-     SAFE_DIVIDE(
-        COUNTIF(event_name = 'purchase'),
-        COUNTIF(event_name = 'view_item')
-    ) * 100 AS view_to_purchase_rate
+
+    SUM(
+        CASE
+            WHEN event_name = 'purchase'
+            THEN item.price_in_usd * item.quantity
+            ELSE 0
+        END
+    ) AS total_revenue,
+
+    ROUND(
+        SAFE_DIVIDE(
+            SUM(
+                CASE
+                    WHEN event_name = 'purchase'
+                    THEN item.price_in_usd * item.quantity
+                    ELSE 0
+                END
+            ),
+            SUM(
+                CASE
+                    WHEN event_name = 'purchase'
+                    THEN item.quantity
+                    ELSE 0
+                END
+            )
+        ),
+        2
+    ) AS revenue_per_unit
+
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
 UNNEST(items) AS item
 
-WHERE event_name IN ('view_item', 'purchase')
+WHERE event_name = 'purchase'
 
 GROUP BY product_name
 
-ORDER BY product_views DESC
+HAVING units_sold > 0
+
+ORDER BY revenue_per_unit DESC
+
 LIMIT 20;
 
 ------------------Customer Behavior Analysis----------------------
 
------------------New vs Returning Users------------------
+-- New vs Returning User Approximation
+-- Users with first_visit event are classified as new.
+-- Users without first_visit event are treated as returning
+-- within the available dataset.
+
+WITH user_activity AS (
+    SELECT
+        user_pseudo_id,
+        COUNTIF(event_name = 'first_visit') AS first_visit_events
+    FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+    GROUP BY user_pseudo_id
+)
 
 SELECT
-    COUNT (DISTINCT CASE
-    WHEN event_name = 'first_visit' THEN user_pseudo_id
-  END) AS new_users,
-
-  COUNT(DISTINCT CASE
-    WHEN event_name != 'first_visit' THEN user_pseudo_id
-  END) AS active_users
-FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
+    COUNTIF(first_visit_events > 0) AS new_users,
+    COUNTIF(first_visit_events = 0) AS returning_users
+FROM user_activity;
 
 ------------------PURCHASE FREQUENCY----------------------
 
@@ -195,25 +227,41 @@ GROUP BY user_pseudo_id
 HAVING purchase_count > 0
 ORDER BY total_revenue DESC;
 
--------------------Customer Revenue Segments----------------------
+------------------ CUSTOMER REVENUE SEGMENTS ------------------
+
+WITH customer_revenue AS (
+    SELECT
+        user_pseudo_id,
+        SUM(
+            CASE
+                WHEN event_name = 'purchase'
+                THEN ecommerce.purchase_revenue_in_usd
+                ELSE 0
+            END
+        ) AS total_revenue
+    FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+    GROUP BY user_pseudo_id
+)
 
 SELECT
-  user_pseudo_id,
-  COUNTIF(event_name = 'purchase') AS purchases,
-  SUM(
     CASE
-      WHEN event_name = 'purchase'
-      THEN ecommerce.purchase_revenue_in_usd
-      ELSE 0
-    END
-  ) AS total_revenue
-FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
-GROUP BY user_pseudo_id
-HAVING total_revenue > 0
-ORDER BY total_revenue DESC
-LIMIT 20;
+        WHEN total_revenue >= 500 THEN 'High Value'
+        WHEN total_revenue >= 100 THEN 'Medium Value'
+        ELSE 'Low Value'
+    END AS customer_segment,
 
---------------------Traffic Source Analysis----------------------
+    COUNT(*) AS customers,
+    ROUND(SUM(total_revenue), 2) AS revenue
+
+FROM customer_revenue
+
+WHERE total_revenue > 0
+
+GROUP BY customer_segment
+
+ORDER BY revenue DESC;
+
+------------------ REVENUE BY USER ACQUISITION SOURCE ------------------
 
 ------------------Revenue by Traffic Source----------------------
 SELECT
@@ -234,17 +282,27 @@ ORDER BY revenue DESC;
 
 ------------------Traffic Source Performance----------------------
 
+------------------ TRAFFIC SOURCE PERFORMANCE ------------------
+
 SELECT
-  traffic_source.source AS source,
-  COUNT(DISTINCT user_pseudo_id) AS users,
-  COUNTIF(event_name = 'purchase') AS purchases,
-  SAFE_DIVIDE(
-    COUNTIF(event_name = 'purchase'),
-    COUNT(DISTINCT user_pseudo_id)
-  ) * 100 AS purchase_rate
+    traffic_source.source AS source,
+    COUNT(DISTINCT user_pseudo_id) AS users,
+    COUNTIF(event_name = 'purchase') AS purchases,
+
+    ROUND(
+        SAFE_DIVIDE(
+            COUNTIF(event_name = 'purchase'),
+            COUNT(DISTINCT user_pseudo_id)
+        ) * 100,
+        2
+    ) AS purchase_rate
+
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+
 GROUP BY source
+
 ORDER BY purchase_rate DESC;
+
 
 -------------------Revenue Analysis----------------------
 
