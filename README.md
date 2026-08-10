@@ -42,12 +42,11 @@ Work in Progress
 - Customer purchase funnel analysis
 - Funnel conversion rate analysis
 - Funnel drop-off analysis
-
-### In Progress
-
 - Product-level analysis
 - Customer behavior analysis
 - Traffic source analysis
 - Revenue analysis
+
+### In Progress
 - Python analysis and visualization
 - Business insights and recommendations
