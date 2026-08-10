@@ -48,5 +48,6 @@ Work in Progress
 - Revenue analysis
 
 ### In Progress
-- Python analysis and visualization
-- Business insights and recommendations
+
+* Python-based analysis and visualization
+* Business insights and recommendations
