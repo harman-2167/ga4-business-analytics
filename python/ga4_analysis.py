@@ -25,6 +25,8 @@ kpi_df = client.query(query).to_dataframe()
 print("\n========== GA4 BUSINESS KPIs ==========")
 print(kpi_df)
 
+kpi_df.to_csv("data/kpi_data.csv", index=False)
+
 # ----------------------------------------------------------
 # 2. MONTHLY REVENUE TREND
 # ----------------------------------------------------------
@@ -48,6 +50,8 @@ monthly_revenue_df = client.query(query).to_dataframe()
 print("\n=========== MONTHLY REVENUE TREND ===========")
 print(monthly_revenue_df)
 
+monthly_revenue_df.to_csv("data/monthly_revenue.csv", index=False)
+
 # ----------------------------------------------------------
 # 3. TOP PRODUCTS BY REVENUE
 # ----------------------------------------------------------
@@ -69,6 +73,8 @@ product_df = client.query(query).to_dataframe()
 
 print("\n============= TOP PRODUCTS BY REVENUE =============")
 print(product_df)
+
+product_df.to_csv("data/top_products.csv", index=False)
 
 # ------------------------------------------------------------
 # 4. ACQUISITION SOURCE PERFORMANCE
@@ -95,3 +101,5 @@ source_df = client.query(query).to_dataframe()
 
 print("\n============= ACQUISITION SOURCE PERFORMANCE =============")
 print(source_df)
+
+source_df.to_csv("data/source_performance.csv", index=False)
