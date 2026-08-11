@@ -18,5 +18,4 @@ Thumbs.db
 *.json
 
 # Generated files
-*.csv
 *.xlsx
