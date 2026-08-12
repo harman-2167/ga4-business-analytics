@@ -11,6 +11,8 @@ The project focuses on analyzing customer behavior, purchase funnels, traffic so
 * Pandas
 * Matplotlib
 * Plotly
+* NumPy
+* SciPy
 
 ## BigQuery Authentication
 
@@ -31,6 +33,26 @@ BigQuery connection successful: ga4-business-analytics
 ```
 
 > **Security:** Never commit service-account keys, credential JSON files, API keys, or other sensitive credentials to GitHub.
+
+## Business Understanding
+
+The business understanding phase defines the business context and analytical direction of the project.
+
+Completed:
+
+- Business scenario
+- Business problem
+- Stakeholder analysis
+- Business objectives
+- Success metrics
+- KPI framework
+- Project scope
+- Assumptions
+- Business questions
+
+Detailed documentation:
+
+`docs/01_Business_Understanding.md`
 
 ## Analysis Completed
 
@@ -115,7 +137,16 @@ ga4-business-analytics/
 
 ### Next Steps
 
-* Data cleaning and preprocessing
-* Deeper business insights
-* Business recommendations
-* Final project documentation
+- Data Understanding
+- GA4 schema analysis
+- Dataset structure analysis
+- Data dictionary
+- Data quality checks
+- Comprehensive SQL business analytics
+- Deeper Python analysis
+- Customer segmentation
+- Retention and cohort analysis
+- Advanced business analytics
+- Business insights
+- Business recommendations
+- Final project documentation
