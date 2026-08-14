@@ -62,6 +62,7 @@ Detailed documentation:
 * Customer purchase funnel analysis
 * Funnel conversion rate analysis
 * Funnel drop-off analysis
+* Customer purchasing user analysis
 * Customer behavior analysis
 
 ### Product Analysis
@@ -134,9 +135,18 @@ ga4-business-analytics/
 * Acquisition source performance visualization
 * Monthly revenue trend visualization
 * Top products by revenue visualization
+* Customer purchasing user analysis
+* Purchasing vs non-purchasing user analysis
 
 ### Next Steps
 
+### Next Steps
+
+- Complete customer analysis
+- One-time vs repeat customer analysis
+- Purchase frequency analysis
+- Customer segmentation
+- Retention and cohort analysis
 - Data Understanding
 - GA4 schema analysis
 - Dataset structure analysis
@@ -144,8 +154,6 @@ ga4-business-analytics/
 - Data quality checks
 - Comprehensive SQL business analytics
 - Deeper Python analysis
-- Customer segmentation
-- Retention and cohort analysis
 - Advanced business analytics
 - Business insights
 - Business recommendations
