@@ -52,9 +52,19 @@ Completed:
 
 Detailed documentation:
 
-`docs/01_Business_Understanding.md`
+`docs/01_business_Understanding.md`
 
 ## Analysis Completed
+
+### Data Understanding
+
+* GA4 dataset overview
+* GA4 schema analysis
+* Dataset structure analysis
+* Nested and repeated fields analysis
+* Event-based data model analysis
+
+`docs/02_Data_Understanding.md`
 
 ### Customer & Funnel Analysis
 
@@ -64,6 +74,8 @@ Detailed documentation:
 * Funnel drop-off analysis
 * Customer purchasing user analysis
 * Customer behavior analysis
+* One-time vs repeat customer analysis
+* Purchase frequency analysis
 
 ### Product Analysis
 
@@ -137,19 +149,16 @@ ga4-business-analytics/
 * Top products by revenue visualization
 * Customer purchasing user analysis
 * Purchasing vs non-purchasing user analysis
+* Data Understanding
+* GA4 schema analysis
+* Dataset structure analysis
+* One-time vs repeat customer analysis
+* Purchase frequency analysis
 
 ### Next Steps
 
-### Next Steps
-
-- Complete customer analysis
-- One-time vs repeat customer analysis
-- Purchase frequency analysis
 - Customer segmentation
 - Retention and cohort analysis
-- Data Understanding
-- GA4 schema analysis
-- Dataset structure analysis
 - Data dictionary
 - Data quality checks
 - Comprehensive SQL business analytics
