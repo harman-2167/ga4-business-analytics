@@ -27,7 +27,7 @@ SELECT
 
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
 
---------------------------- 3. Purchase Count Per Customer ---------------------------
+--------------------------- 3. PURCHASE COUNT PER CUSTOMER ---------------------------
 
 SELECT
     user_pseudo_id,
@@ -37,7 +37,7 @@ WHERE event_name = 'purchase'
 GROUP BY user_pseudo_id
 ORDER BY purchase_count DESC;
 
---------------------------- 4. One-Time vs Repeat Customers ---------------------------
+--------------------------- 4. ONE-TIME VS REPEAT CUSTOMER ---------------------------
 
 SELECT
     CASE
@@ -56,7 +56,7 @@ FROM (
 GROUP BY customer_type
 ORDER BY number_of_customers DESC;
 
----------------------------4. Purchase Frequency Distribution----------------
+--------------------------- 5. PURCHASE FREQUENCY DISTRIBUTION ----------------
 
 SELECT
     purchase_count,
@@ -108,14 +108,7 @@ FROM (
     GROUP BY user_pseudo_id
 );
 
-------------------------- 9. AVERAGE ORDER VALUE -------------------
-
-SELECT 
-    avg(ecommerce.purchase_revenue) AS  average_order_value
-FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
-    WHERE event_name = 'purchase';
-
-------------------------- 10. TOP 10 CUSTOMER BY REVENUE------------------
+------------------------- 9. TOP 10 CUSTOMER BY REVENUE------------------
 
 SELECT 
     user_pseudo_id,
