@@ -9,9 +9,9 @@ The project focuses on analyzing customer behavior, purchase funnels, traffic so
 * SQL (BigQuery)
 * Python
 * Pandas
+* NumPy
 * Matplotlib
 * Plotly
-* NumPy
 * SciPy
 
 ## BigQuery Authentication
@@ -40,23 +40,25 @@ The business understanding phase defines the business context and analytical dir
 
 Completed:
 
-- Business scenario
-- Business problem
-- Stakeholder analysis
-- Business objectives
-- Success metrics
-- KPI framework
-- Project scope
-- Assumptions
-- Business questions
+* Business scenario
+* Business problem
+* Stakeholder analysis
+* Business objectives
+* Success metrics
+* KPI framework
+* Project scope
+* Assumptions
+* Business questions
 
 Detailed documentation:
 
-`docs/01_business_Understanding.md`
+`docs/01_business_understanding.md`
 
-## Analysis Completed
+## Data Understanding
 
-### Data Understanding
+The data understanding phase focuses on the GA4 dataset structure and schema.
+
+Completed:
 
 * GA4 dataset overview
 * GA4 schema analysis
@@ -64,51 +66,113 @@ Detailed documentation:
 * Nested and repeated fields analysis
 * Event-based data model analysis
 
-`docs/02_Data_Understanding.md`
+Detailed documentation:
 
-### Customer & Funnel Analysis
+`docs/02_data_understanding.md`
 
-* Dataset overview analysis
-* Customer purchase funnel analysis
-* Funnel conversion rate analysis
+## SQL Analysis
+
+SQL analysis is performed using Google BigQuery and is organized into separate analytical modules.
+
+### Data Overview
+
+* Dataset verification
+* Total events
+* Total users
+* Total days
+* Dataset date range
+* Total sessions
+* Total purchases
+* Total page views
+* New and returning users
+* Dataset size summary
+
+`sql/01_data_overview.sql`
+
+### Event Analysis
+
+* Event frequency
+* Event distribution
+* Unique users per event
+* Average events per user
+* Average events per day
+* Daily event trend
+
+`sql/02_event_analysis.sql`
+
+### Customer Analysis
+
+* Purchasing users
+* Non-purchasing users
+* Purchase count per customer
+* One-time vs repeat customers
+* Purchase frequency distribution
+* Average purchases per customer
+* Total revenue by customer
+* Average revenue per customer
+* Top customers by revenue
+
+`sql/03_customer_analysis.sql`
+
+### Funnel Analysis
+
+* Funnel users by stage
+* Funnel conversion rates
+* Overall purchase conversion rate
 * Funnel drop-off analysis
-* Customer purchasing user analysis
-* Customer behavior analysis
-* One-time vs repeat customer analysis
-* Purchase frequency analysis
+
+`sql/04_funnel_analysis.sql`
 
 ### Product Analysis
 
 * Product-level analysis
 * Top products by revenue
+* Top products by quantity sold
+* Revenue per unit
 
-### Traffic & Revenue Analysis
+`sql/05_product_analysis.sql`
 
-* Traffic source analysis
-* Revenue analysis
-* Acquisition source performance
+### Revenue Analysis
+
+* Total revenue
+* Revenue by date
 * Monthly revenue trend
+* Average order value
+* Revenue by customer
+
+`sql/06_revenue_analysis.sql`
+
+### Traffic Source Analysis
+
+* Revenue by traffic source
+* Traffic source performance
+* Acquisition source performance
+* Purchase rate by traffic source
+
+`sql/07_traffic_source_analysis.sql`
 
 ## Data Visualization
 
-Python-based visualizations have been created using Matplotlib and Plotly.
+Python-based visualizations will be created using Matplotlib and Plotly after the core SQL analysis is completed.
 
-### Acquisition Source Performance
+Planned visualizations include:
 
-![Acquisition Source Performance](screenshots/acquisition_source_performance.png)
-
-### Monthly Revenue Trend
-
-![Monthly Revenue Trend](screenshots/monthly_revenue_trend.png)
-
-### Top Products by Revenue
-
-![Top Products by Revenue](screenshots/top_products_by_revenue.png)
+* Funnel conversion visualization
+* Customer purchase behavior
+* Revenue trends
+* Traffic source performance
+* Top products by revenue
+* Top products by quantity
+* Customer segments
 
 ## Project Structure
 
 ```text
 ga4-business-analytics/
+│
+├── docs/
+│   ├── 01_business_understanding.md
+│   └── 02_data_understanding.md
 │
 ├── python/
 │   ├── bigquery_connection.py
@@ -116,18 +180,21 @@ ga4-business-analytics/
 │   └── visualization.py
 │
 ├── sql/
-│   └── ...
+│   ├── 01_data_overview.sql
+│   ├── 02_event_analysis.sql
+│   ├── 03_customer_analysis.sql
+│   ├── 04_funnel_analysis.sql
+│   ├── 05_product_analysis.sql
+│   ├── 06_revenue_analysis.sql
+│   └── 07_traffic_source_analysis.sql
 │
 ├── screenshots/
-│   ├── acquisition_source_performance.png
-│   ├── monthly_revenue_trend.png
-│   └── top_products_by_revenue.png
 │
 ├── README.md
 └── requirements.txt
 ```
 
-## Status
+## Project Status
 
 **Work in Progress**
 
@@ -135,35 +202,40 @@ ga4-business-analytics/
 
 * BigQuery authentication and connection
 * GA4 dataset verification
+* Business understanding
+* Data understanding
+* GA4 schema analysis
+* Dataset structure analysis
+* Nested and repeated fields analysis
+* Event-based data model analysis
 * Dataset overview analysis
-* Customer purchase funnel analysis
+* Event analysis
+* Customer purchasing user analysis
+* Purchasing vs non-purchasing user analysis
+* One-time vs repeat customer analysis
+* Purchase frequency analysis
+* Customer revenue analysis
+* Funnel analysis
 * Funnel conversion rate analysis
 * Funnel drop-off analysis
 * Product-level analysis
-* Customer behavior analysis
 * Traffic source analysis
 * Revenue analysis
-* Python-based data visualization
-* Acquisition source performance visualization
-* Monthly revenue trend visualization
-* Top products by revenue visualization
-* Customer purchasing user analysis
-* Purchasing vs non-purchasing user analysis
-* Data Understanding
-* GA4 schema analysis
-* Dataset structure analysis
-* One-time vs repeat customer analysis
-* Purchase frequency analysis
 
 ### Next Steps
 
-- Customer segmentation
-- Retention and cohort analysis
-- Data dictionary
-- Data quality checks
-- Comprehensive SQL business analytics
-- Deeper Python analysis
-- Advanced business analytics
-- Business insights
-- Business recommendations
-- Final project documentation
+* Complete and validate remaining SQL analysis modules
+* Customer segmentation
+* Retention and cohort analysis
+* Data quality checks
+* Data dictionary
+* Python-based deeper analysis
+* Data visualization
+* Advanced business analytics
+* Business insights
+* Business recommendations
+* Final project documentation
+
+## Project Goal
+
+The goal of this project is to transform raw GA4 ecommerce event data into meaningful business insights that can help stakeholders understand customer behavior, identify funnel bottlenecks, evaluate acquisition channels, analyze product performance, and improve revenue performance.
