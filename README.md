@@ -220,11 +220,11 @@ ga4-business-analytics/
 * Funnel drop-off analysis
 * Product analysis
 * Traffic source analysis
-
+* Revenue analysis
 
 ### Next Steps
 
-* Complete and validate revenue analysis
+
 * Complete and validate remaining SQL analysis modules
 * Customer segmentation
 * Retention and cohort analysis
