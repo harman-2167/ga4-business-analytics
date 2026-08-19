@@ -226,7 +226,6 @@ ga4-business-analytics/
 
 ### Next Steps
 
-
 * Customer segmentation
 * Retention and cohort analysis
 * Data dictionary
