@@ -221,11 +221,12 @@ ga4-business-analytics/
 * Product analysis
 * Traffic source analysis
 * Revenue analysis
+* Complete and validate remaining SQL analysis modules
+
 
 ### Next Steps
 
 
-* Complete and validate remaining SQL analysis modules
 * Customer segmentation
 * Retention and cohort analysis
 * Data quality checks
