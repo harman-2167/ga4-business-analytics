@@ -135,3 +135,48 @@ SELECT
 FROM
     `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
     UNNEST(items) AS item;
+
+-------------------- 11. INVALID QUANTITY FINAL CHECK --------------------
+
+SELECT
+    event_name,
+    item.item_name,
+    item.quantity,
+    item.price,
+    COUNT(*) AS occurrences
+FROM
+    `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
+    UNNEST(items) AS item
+WHERE
+    item.quantity <= 0
+GROUP BY
+    event_name,
+    item.item_name,
+    item.quantity,
+    item.price
+ORDER BY
+    occurrences 
+DESC;
+
+-------------------- 12. CLEANED ITEM FILTER --------------------
+
+SELECT
+    *
+FROM
+    `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
+    UNNEST(items) AS item
+WHERE
+    item.quantity > 0;
+
+-------------------- 13. FINAL CLEANED ITEM VALIDATION --------------------
+
+SELECT
+    COUNT(*) AS cleaned_items,
+    COUNTIF(item.quantity <= 0) AS invalid_quantity,
+    COUNTIF(item.price < 0) AS negative_price,
+    COUNTIF(item.item_name IS NULL) AS missing_product_name
+FROM
+    `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
+    UNNEST(items) AS item
+WHERE
+    item.quantity > 0;
