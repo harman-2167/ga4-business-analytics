@@ -142,6 +142,19 @@ SQL analysis is performed using Google BigQuery and is organized into separate a
 
 `sql/06_revenue_analysis.sql`
 
+### Session Analysis
+
+* Total sessions
+* Sessions by date
+* Average sessions per user
+* Average events per session
+* Sessions by device
+* Sessions by traffic source
+* Sessions by country
+* Session conversion to purchase
+
+`sql/07_session_analysis.sql`
+
 ### Traffic Source Analysis
 
 * Revenue by traffic source
@@ -149,7 +162,7 @@ SQL analysis is performed using Google BigQuery and is organized into separate a
 * Acquisition source performance
 * Purchase rate by traffic source
 
-`sql/07_traffic_source_analysis.sql`
+`sql/08_traffic_source_analysis.sql`
 
 ## Data Visualization
 
@@ -186,7 +199,9 @@ ga4-business-analytics/
 │   ├── 04_funnel_analysis.sql
 │   ├── 05_product_analysis.sql
 │   ├── 06_revenue_analysis.sql
-│   └── 07_traffic_source_analysis.sql
+|   |── 07_session_analysis.sql
+│   └── 08_traffic_source_analysis.sql
+|   
 │
 ├── screenshots/
 │
@@ -221,11 +236,11 @@ ga4-business-analytics/
 * Product analysis
 * Traffic source analysis
 * Revenue analysis
-* Complete and validate remaining SQL analysis modules
 * Data quality checks
 
 ### Next Steps
 
+* Complete and validate remaining SQL analysis modules
 * Customer segmentation
 * Retention and cohort analysis
 * Data dictionary
