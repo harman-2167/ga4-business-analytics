@@ -74,7 +74,7 @@ WITH monthly_revenue AS (
     ) AS revenue
   FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
   WHERE event_name = 'purchase'
-  GROUP BY month
+  GROUP BY month )
 
 SELECT
   month,
