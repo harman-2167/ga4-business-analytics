@@ -215,6 +215,8 @@ ga4-business-analytics/
 
 ### Completed
 
+### Completed
+
 * BigQuery authentication and connection
 * GA4 dataset verification
 * Business understanding
@@ -225,21 +227,14 @@ ga4-business-analytics/
 * Event-based data model analysis
 * Dataset overview analysis
 * Event analysis
-* Customer purchasing user analysis
-* Purchasing vs non-purchasing user analysis
-* One-time vs repeat customer analysis
-* Purchase frequency analysis
-* Customer revenue analysis
+* Customer analysis
 * Funnel analysis
-* Funnel conversion rate analysis
-* Funnel drop-off analysis
 * Product analysis
-* Traffic source analysis
 * Revenue analysis
-* Data quality checks
 
 ### Next Steps
 
+* Traffic source analysis
 * Complete and validate remaining SQL analysis modules
 * Customer segmentation
 * Retention and cohort analysis
