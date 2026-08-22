@@ -15,3 +15,15 @@ SELECT
         END
     ) AS total_revenue
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
+
+--------------------- 2. AVERAGE ORDER VALUE ----------------------
+
+SELECT
+    SAFE_DIVIDE(
+        SUM(ecommerce.purchase_revenue),
+        COUNT(DISTINCT ecommerce.transaction_id)
+    ) AS average_order_value
+
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+WHERE event_name = 'purchase'
+  AND ecommerce.transaction_id IS NOT NULL;
