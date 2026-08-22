@@ -31,8 +31,11 @@ WHERE event_name = 'session_start';
 
 SELECT 
     COUNT(*) AS total_events,
-    COUNTIF(event_name = 'session_start') AS total_session,
-    COUNT(*) / COUNTIF(event_name = 'session_start') AS avg_events_per_session
+    COUNTIF(event_name = 'session_start') AS total_sessions,
+    SAFE_DIVIDE(
+        COUNT(*),
+        COUNTIF(event_name = 'session_start')
+    ) AS avg_events_per_session
 FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`;
 
 --------------------- 5. SESSION BY DEVICE ---------------------------
@@ -45,3 +48,60 @@ WHERE event_name = 'session_start'
 GROUP BY device
 ORDER BY total_sessions DESC;
 
+--------------------- 6. SESSION BY TRAFFIC SOURCE ---------------------
+
+SELECT 
+    traffic_source.source AS  traffic_source,
+    COUNT(*) AS total_sessions
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+WHERE event_name = 'session_start'
+GROUP BY traffic_source.source
+ORDER BY total_sessions
+DESC;
+
+--------------------- 7. SESSION BY COUNTRY -----------------------
+
+SELECT 
+    geo.country AS country,
+    COUNT(*) AS total_sessions
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+WHERE event_name = 'session_start'
+GROUP BY country
+ORDER BY total_sessions
+DESC;
+
+--------------------- 8. SESSION CONVERSION TO PURCHASE -------------------
+
+WITH sessions AS (
+    SELECT 
+        user_pseudo_id,
+
+        (
+            SELECT value.int_value
+            FROM UNNEST(event_params)
+            WHERE key = 'ga_session_id'
+        ) AS session_id,
+
+        MAX(
+            CASE 
+                WHEN event_name = 'purchase' THEN 1
+                ELSE 0
+            END
+        ) AS purchased
+
+    FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+
+    GROUP BY 
+        user_pseudo_id,
+        session_id
+)
+
+SELECT 
+    COUNT(*) AS total_sessions,
+    SUM(purchased) AS purchase_sessions,
+    SAFE_DIVIDE(
+        SUM(purchased),
+        COUNT(*)
+    ) * 100 AS session_conversion_rate
+
+FROM sessions;
