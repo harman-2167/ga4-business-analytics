@@ -199,9 +199,9 @@ ga4-business-analytics/
 │   ├── 04_funnel_analysis.sql
 │   ├── 05_product_analysis.sql
 │   ├── 06_revenue_analysis.sql
-|   |── 07_session_analysis.sql
-│   └── 08_traffic_source_analysis.sql
-|   
+|   ├── 07_session_analysis.sql
+│   ├── 08_traffic_source_analysis.sql
+|   ├── 09_business_analysis.sql
 │
 ├── screenshots/
 │
