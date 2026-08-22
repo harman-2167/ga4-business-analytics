@@ -106,7 +106,7 @@ SELECT
 
 FROM sessions;
 
---------------------- 9. SESSION COUNT VALIDATION ---------------------
+--------------------- 9. SESSION COUNT VALIDATION ----------------------
 
 SELECT
     COUNT(*) AS session_start_events,
