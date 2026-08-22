@@ -105,3 +105,19 @@ SELECT
     ) * 100 AS session_conversion_rate
 
 FROM sessions;
+
+--------------------- 9. SESSION COUNT VALIDATION ---------------------
+
+SELECT
+    COUNT(*) AS session_start_events,
+    COUNT(DISTINCT CONCAT(
+        user_pseudo_id,
+        '-',
+        CAST((
+            SELECT value.int_value
+            FROM UNNEST(event_params)
+            WHERE key = 'ga_session_id'
+        ) AS STRING)
+    )) AS unique_sessions
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+WHERE event_name = 'session_start';
