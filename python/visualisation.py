@@ -69,28 +69,3 @@ plt.tight_layout()
 plt.savefig("screenshots/acquisition_source_performance.png")
 plt.show()
 
-# --------------------------------------------------
-# 4. REVENUE BY DEVICE
-# --------------------------------------------------
-
-device_df = pd.read_csv("data/revenue_by_device.csv")
-
-print("\nRevenue by Device:")
-print(device_df)
-
-plt.figure(figsize=(8, 5))
-
-plt.bar(
-    device_df["device"],
-    device_df["revenue"]
-)
-
-plt.title("Revenue by Device")
-plt.xlabel("Device")
-plt.ylabel("Revenue (USD)")
-
-plt.tight_layout()
-
-plt.savefig("screenshots/revenue_by_device.png")
-
-plt.show()
