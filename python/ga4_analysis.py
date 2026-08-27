@@ -103,3 +103,36 @@ print("\n============= ACQUISITION SOURCE PERFORMANCE =============")
 print(source_df)
 
 source_df.to_csv("data/source_performance.csv", index=False)
+
+# --------------------------------------------------
+# 5. REVENUE BY DEVICE
+# --------------------------------------------------
+
+query = f"""
+SELECT
+    device.category AS device,
+
+    COUNT(DISTINCT user_pseudo_id) AS users,
+
+    COUNTIF(event_name = 'purchase') AS purchases,
+
+    SUM(
+        CASE
+            WHEN event_name = 'purchase'
+            THEN ecommerce.purchase_revenue_in_usd
+            ELSE 0
+        END
+    ) AS revenue
+
+FROM `{TABLE}`
+
+GROUP BY device
+ORDER BY revenue DESC
+"""
+
+device_df = client.query(query).to_dataframe()
+
+print("\n============= REVENUE BY DEVICE =============")
+print(device_df)
+
+device_df.to_csv("data/revenue_by_device.csv", index=False)
