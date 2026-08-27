@@ -322,8 +322,9 @@ ga4-business-analytics/
 │   ├── 06_revenue_analysis.sql
 │   ├── 07_session_analysis.sql
 │   ├── 08_traffic_source_analysis.sql
-│   └── 09_business_analysis.sql
-│
+│   ├── 09_business_analysis.sql
+│   └── Data_cleaning.sql
+|
 ├── screenshots/
 │   ├── monthly_revenue_trend.png
 │   ├── top_products_by_revenue.png
