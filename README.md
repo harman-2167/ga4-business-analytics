@@ -4,7 +4,6 @@ Business Analytics project using the **Google Analytics 4 (GA4) public ecommerce
 
 The project focuses on analyzing customer behavior, purchase funnels, traffic sources, product performance, sessions, and revenue to generate meaningful and actionable business insights.
 
----
 
 ## Tech Stack
 
@@ -16,7 +15,6 @@ The project focuses on analyzing customer behavior, purchase funnels, traffic so
 * Plotly
 * SciPy
 
----
 
 ## BigQuery Authentication
 
@@ -38,7 +36,6 @@ BigQuery connection successful: ga4-business-analytics
 
 > **Security:** Never commit service-account keys, credential JSON files, API keys, or other sensitive credentials to GitHub.
 
----
 
 # Business Understanding
 
@@ -62,7 +59,6 @@ Detailed documentation:
 docs/01_business_understanding.md
 ```
 
----
 
 # Data Understanding
 
@@ -82,7 +78,6 @@ Detailed documentation:
 docs/02_data_understanding.md
 ```
 
----
 
 # SQL Analysis
 
@@ -107,7 +102,6 @@ Analysis includes:
 * New and returning users
 * Dataset size summary
 
----
 
 ## 02. Event Analysis
 
@@ -124,7 +118,6 @@ Analysis includes:
 * Average events per day
 * Daily event trends
 
----
 
 ## 03. Customer Analysis
 
@@ -144,7 +137,6 @@ Analysis includes:
 * Average revenue per customer
 * Top customers by revenue
 
----
 
 ## 04. Funnel Analysis
 
@@ -159,7 +151,6 @@ Analysis includes:
 * Overall purchase conversion rate
 * Funnel drop-off analysis
 
----
 
 ## 05. Product Analysis
 
@@ -174,7 +165,6 @@ Analysis includes:
 * Top products by quantity sold
 * Revenue per unit
 
----
 
 ## 06. Revenue Analysis
 
@@ -190,7 +180,6 @@ Analysis includes:
 * Average order value
 * Revenue by customer
 
----
 
 ## 07. Session Analysis
 
@@ -209,7 +198,6 @@ Analysis includes:
 * Sessions by country
 * Session conversion to purchase
 
----
 
 ## 08. Traffic Source Analysis
 
@@ -224,7 +212,6 @@ Analysis includes:
 * Acquisition source performance
 * Purchase rate by traffic source
 
----
 
 ## 09. Business Analysis
 
@@ -245,7 +232,6 @@ Analysis includes:
 * Product performance
 * Purchase performance
 
----
 
 # Data Quality Validation
 
@@ -267,7 +253,6 @@ Data quality validation is performed to ensure that the analytical results are r
 
 The validation process also identifies abnormal product quantities and missing item-level attributes before using the data for deeper analysis.
 
----
 
 # Python Analysis
 
@@ -289,7 +274,6 @@ python/ga4_analysis.py
 python/visualization.py
 ```
 
----
 
 # Data Visualization
 
@@ -308,7 +292,6 @@ Visualization outputs are stored in:
 screenshots/
 ```
 
----
 
 # Project Structure
 
@@ -351,7 +334,6 @@ ga4-business-analytics/
 └── requirements.txt
 ```
 
----
 
 # Project Status
 
@@ -378,7 +360,6 @@ ga4-business-analytics/
 * Python analysis setup
 * Initial business visualizations
 
----
 
 ## Current Phase
 
@@ -391,7 +372,6 @@ Current work includes:
 * Improving analytical presentation
 * Preparing business insights
 
----
 
 # Next Steps
 
@@ -404,25 +384,6 @@ Current work includes:
 * Business recommendations
 * Final project documentation
 
----
-
-# Business Questions
-
-The project aims to answer key business questions such as:
-
-1. How much revenue is generated over time?
-2. Which products generate the highest revenue?
-3. Which products have the highest quantity sold?
-4. Which traffic sources generate the most revenue?
-5. Which acquisition channels perform best?
-6. Which devices generate the most revenue?
-7. How many customers make repeat purchases?
-8. Where are the major funnel drop-offs?
-9. What is the overall purchase conversion rate?
-10. Which customer segments contribute the most revenue?
-11. Which channels and products represent the strongest business opportunities?
-
----
 
 # Project Goal
 
