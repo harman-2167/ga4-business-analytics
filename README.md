@@ -14,6 +14,7 @@ The project focuses on analyzing customer behavior, purchase funnels, traffic so
 * Matplotlib
 * Plotly
 * SciPy
+* Streamlit
 
 
 ## BigQuery Authentication
@@ -277,7 +278,7 @@ python/visualization.py
 
 # Data Visualization
 
-Python-based visualizations are being developed using **Matplotlib** and **Plotly**.
+Python-based visualizations are developed using **Matplotlib**, **Plotly**, and **Streamlit**.
 
 ### Completed Visualizations
 
@@ -292,6 +293,21 @@ Visualization outputs are stored in:
 screenshots/
 ```
 
+### Interactive Dashboard
+
+An interactive business analytics dashboard is being developed using **Streamlit**.
+
+The dashboard provides:
+
+* Business KPI overview
+* Revenue performance
+* Monthly revenue trend
+* Top products by revenue
+* Revenue by device
+* Acquisition source performance
+* Interactive business analysis
+
+
 
 # Project Structure
 
@@ -303,6 +319,9 @@ ga4-business-analytics/
 │   ├── top_products_by_revenue.csv
 │   ├── acquisition_source_performance.csv
 │   └── revenue_by_device.csv
+│ 
+├── dashboard/
+│   └── app.py
 │
 ├── docs/
 │   ├── 01_business_understanding.md
@@ -361,22 +380,28 @@ ga4-business-analytics/
 * Python analysis setup
 * Initial business visualizations
 
-
 ## Current Phase
 
-The project is currently focused on completing the **Python-based analytical and visualization phase**.
+The project is currently focused on completing the **interactive Streamlit business analytics dashboard**.
 
 Current work includes:
 
-* Completing remaining business visualizations
-* Validating visualization results
-* Improving analytical presentation
-* Preparing business insights
+* Integrating analytical CSV outputs into Streamlit
+* Adding interactive business visualizations
+* Displaying key business KPIs
+* Adding revenue performance analysis
+* Adding device-level revenue analysis
+* Adding acquisition source performance
+* Validating dashboard results
+* Improving dashboard presentation
+* Preparing final business insights and recommendations
 
 
 # Next Steps
 
-* Complete remaining Python visualizations
+* Complete the Streamlit dashboard
+* Add remaining business visualizations
+* Validate dashboard metrics against SQL results
 * Customer segmentation
 * Retention and cohort analysis
 * Data dictionary
@@ -384,6 +409,8 @@ Current work includes:
 * Business insights
 * Business recommendations
 * Final project documentation
+* Final GitHub cleanup and presentation
+
 
 
 # Project Goal
