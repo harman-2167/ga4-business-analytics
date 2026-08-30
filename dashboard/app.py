@@ -46,3 +46,12 @@ st.line_chart(
     x="month",
     y="monthly_revenue"
 )
+
+st.subheader("Revenue By Device")
+device_df = pd.read_csv("data/revenue_by_device.csv")
+
+st.bar_chart(
+    device_df,
+    x="device",
+    y="revenue"
+)
