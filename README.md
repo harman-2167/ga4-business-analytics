@@ -379,6 +379,10 @@ ga4-business-analytics/
 * Data quality validation
 * Python analysis setup
 * Initial business visualizations
+* Adding revenue performance analysis
+* Adding device-level revenue analysis
+* Adding acquisition source performance
+* Integrating analytical CSV outputs into Streamlit
 
 ## Current Phase
 
@@ -386,12 +390,8 @@ The project is currently focused on completing the **interactive Streamlit busin
 
 Current work includes:
 
-* Integrating analytical CSV outputs into Streamlit
 * Adding interactive business visualizations
 * Displaying key business KPIs
-* Adding revenue performance analysis
-* Adding device-level revenue analysis
-* Adding acquisition source performance
 * Validating dashboard results
 * Improving dashboard presentation
 * Preparing final business insights and recommendations
