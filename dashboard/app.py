@@ -1,16 +1,21 @@
 import streamlit as st
-from pathlib import Path
+import plotly.express as px
 import pandas as pd
 
 st.set_page_config(
     page_title="GA4 Business Analytics Dashboard",
-    page_icon="📊",
+    page_icon="📈",
     layout="wide"
 )
 
 st.title("GA4 Business Analytics Dashboard")
 
-st.write("Welcome to the GA4 Business Analytics Dashboard")
+st.markdown(
+    "Interactive analysis of customer behavior, revenue, "
+    "products, devices, and acquisition performance."
+)
+
+st.divider()
 
 st.subheader("Business KPIs")
 
@@ -48,29 +53,36 @@ st.line_chart(
     y="monthly_revenue"
 )           
 
-# acquisition source 
+col1, col2 = st.columns(2)
 
-st.subheader("Acquisition Source")
-source_df = pd.read_csv("data/source_performance.csv")
+with col1:
 
-st.dataframe(source_df)
+    st.subheader("Acquisition Source")
 
-st.bar_chart(
-    source_df,
-    x="source",
-    y="revenue"
-)
+    source_df = pd.read_csv(
+        "data/source_performance.csv"
+    )
 
-# revenue by devices
+    st.bar_chart(
+        source_df,
+        x="source",
+        y="revenue"
+    )
 
-st.subheader("Revenue By Device")
-device_df = pd.read_csv("data/revenue_by_device.csv")
 
-st.bar_chart(
-    device_df,
-    x="device",
-    y="revenue"
-) 
+with col2:
+
+    st.subheader("Revenue By Device")
+
+    device_df = pd.read_csv(
+        "data/revenue_by_device.csv"
+    )
+
+    st.bar_chart(
+        device_df,
+        x="device",
+        y="revenue"
+    )
 
 # top products
 
@@ -78,3 +90,84 @@ st.subheader("Top Products")
 products_df = pd.read_csv("data/top_products.csv")
 
 st.dataframe(products_df)
+
+fig = px.bar (
+    products_df,
+    x= "revenue",
+    y= "product_name",
+    orientation= "h",
+    title ="Top Product By Revenue",
+    labels={
+        "revenue": "Revenue ($)",
+        "product_name": "Product"
+    }
+)
+
+fig.update_layout(
+    yaxis={"categoryorder": "total ascending"},
+    height=500
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+st.subheader("Product Revenue Details")
+
+st.dataframe(
+    products_df,
+    use_container_width=True,
+    hide_index=True
+)
+
+# funnel purchasing 
+
+st.subheader("Customer Purchasing Funnel")
+funnel_df = pd.read_csv("data/funnel_data.csv")
+
+funnel_data = pd.DataFrame({
+    "Stage": [
+        "Sessions",
+        "Product Viewers",
+        "Add to Cart",
+        "Purchasers"
+    ],
+    "Users": [
+        funnel_df["sessions"].iloc[0],
+        funnel_df["product_viewers"].iloc[0],
+        funnel_df["cart_users"].iloc[0],
+        funnel_df["purchasers"].iloc[0]
+    ]
+})
+
+fig = px.funnel(
+    funnel_data,
+    x="Users",
+    y="Stage",
+    title="Customer Purchasing Funnel"
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+st.subheader("Business Insights")
+
+st.markdown("""
+### Revenue Performance
+The dashboard tracks overall revenue and monthly revenue trends
+to identify periods of stronger and weaker business performance.
+
+### Customer Purchasing Behavior
+Purchasing users and total purchases help measure customer
+engagement and purchasing activity.
+
+### Device Performance
+Revenue by device helps identify which device category
+contributes the most to ecommerce revenue.
+
+### Acquisition Performance
+Acquisition source performance helps identify traffic sources
+that generate stronger revenue and customer activity.
+""")
