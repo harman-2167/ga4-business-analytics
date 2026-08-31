@@ -152,8 +152,9 @@ st.plotly_chart(
     use_container_width=True
 )
 
-st.subheader("Business Insights")
+# business insights
 
+st.subheader("Business Insights")
 st.markdown("""
 ### Revenue Performance
 The dashboard tracks overall revenue and monthly revenue trends
