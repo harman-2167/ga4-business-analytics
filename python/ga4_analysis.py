@@ -136,3 +136,44 @@ print("\n============= REVENUE BY DEVICE =============")
 print(device_df)
 
 device_df.to_csv("data/revenue_by_device.csv", index=False)
+
+# --------------------------------------------------
+# CUSTOMER PURCHASING FUNNEL
+# --------------------------------------------------
+
+funnel_query = """
+SELECT
+    COUNT(DISTINCT CASE
+        WHEN event_name = 'session_start'
+        THEN user_pseudo_id
+    END) AS sessions,
+
+    COUNT(DISTINCT CASE
+        WHEN event_name = 'view_item'
+        THEN user_pseudo_id
+    END) AS product_viewers,
+
+    COUNT(DISTINCT CASE
+        WHEN event_name = 'add_to_cart'
+        THEN user_pseudo_id
+    END) AS cart_users,
+
+    COUNT(DISTINCT CASE
+        WHEN event_name = 'purchase'
+        THEN user_pseudo_id
+    END) AS purchasers
+
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+"""
+
+funnel_df = client.query(funnel_query).to_dataframe()
+
+print("\nCUSTOMER PURCHASING FUNNEL")
+print(funnel_df)
+
+funnel_df.to_csv(
+    "data/funnel_data.csv",
+    index=False
+)
+
+print("Funnel data saved successfully.")
