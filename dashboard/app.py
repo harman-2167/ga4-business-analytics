@@ -37,15 +37,31 @@ col3.metric(
     f"{total_purchases:,.0f}"
 )
 
-st.subheader("Monthly Revenue Trend")
+#monthly revenue trend
 
+st.subheader("Monthly Revenue Trend")
 monthly_revenue_df = pd.read_csv("data/monthly_revenue.csv")
 
 st.line_chart(
     monthly_revenue_df,
     x="month",
     y="monthly_revenue"
+)           
+
+# acquisition source 
+
+st.subheader("Acquisition Source")
+source_df = pd.read_csv("data/source_performance.csv")
+
+st.dataframe(source_df)
+
+st.bar_chart(
+    source_df,
+    x="source",
+    y="revenue"
 )
+
+# revenue by devices
 
 st.subheader("Revenue By Device")
 device_df = pd.read_csv("data/revenue_by_device.csv")
@@ -54,4 +70,11 @@ st.bar_chart(
     device_df,
     x="device",
     y="revenue"
-)
+) 
+
+# top products
+
+st.subheader("Top Products")
+products_df = pd.read_csv("data/top_products.csv")
+
+st.dataframe(products_df)
