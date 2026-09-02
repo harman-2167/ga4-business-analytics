@@ -120,22 +120,23 @@ st.dataframe(
     hide_index=True
 )
 
-# funnel purchasing 
+# Customer Purchasing Funnel
 
 st.subheader("Customer Purchasing Funnel")
+
 funnel_df = pd.read_csv("data/funnel_data.csv")
 
 funnel_data = pd.DataFrame({
     "Stage": [
-        "Sessions",
-        "Product Viewers",
+        "View Item",
         "Add to Cart",
-        "Purchasers"
+        "Begin Checkout",
+        "Purchase"
     ],
     "Users": [
-        funnel_df["sessions"].iloc[0],
         funnel_df["product_viewers"].iloc[0],
         funnel_df["cart_users"].iloc[0],
+        funnel_df["checkout_users"].iloc[0],
         funnel_df["purchasers"].iloc[0]
     ]
 })
@@ -151,7 +152,6 @@ st.plotly_chart(
     fig,
     use_container_width=True
 )
-
 # business insights
 
 st.subheader("Business Insights")
