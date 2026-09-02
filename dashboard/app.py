@@ -19,7 +19,7 @@ st.divider()
 
 st.subheader("Business KPIs")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4, col5, col6 = st.columns(6)
 
 kpi_df = pd.read_csv("data/kpi_data.csv")
 
@@ -152,6 +152,7 @@ st.plotly_chart(
     fig,
     use_container_width=True
 )
+
 # business insights
 
 st.subheader("Business Insights")
