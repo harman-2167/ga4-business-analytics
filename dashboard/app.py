@@ -141,7 +141,7 @@ funnel_data = pd.DataFrame({
     "Users": [
         funnel_df["product_viewers"].iloc[0],
         funnel_df["cart_users"].iloc[0],
-        funnel_df["checkout_users"].iloc[0],
+        funnel_df["cart_users"].iloc[0],
         funnel_df["purchasers"].iloc[0]
     ]
 })
