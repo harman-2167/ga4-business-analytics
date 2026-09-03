@@ -18,28 +18,33 @@ st.markdown(
 st.divider()
 
 st.subheader("Business KPIs")
+kpi_df = pd.read_csv("data/business_kpis.csv")
 
-col1, col2, col3, col4, col5, col6 = st.columns(6)
-
-kpi_df = pd.read_csv("data/kpi_data.csv")
-
+total_users = kpi_df["total_users"].iloc[0]
+total_sessions = kpi_df["total_sessions"].iloc[0]
+total_orders = kpi_df["total_orders"].iloc[0]
 total_revenue = kpi_df["total_revenue"].iloc[0]
-purchasing_users = kpi_df["purchasing_users"].iloc[0]
-total_purchases = kpi_df["total_purchases"].iloc[0]
+
+col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(
-    "💰 Total Revenue",
-    f"${total_revenue:,.0f}"
+    "Total Users",
+    f"{total_users:,.0f}"
 )
 
 col2.metric(
-    "👥 Purchasing Users",
-    f"{purchasing_users:,.0f}"
+    "Total Sessions",
+    f"{total_sessions:,.0f}"
 )
 
 col3.metric(
-    "🛒 Total Purchases",
-    f"{total_purchases:,.0f}"
+    "Total Orders",
+    f"{total_orders:,.0f}"
+)
+
+col4.metric(
+    "Total Revenue",
+    f"${total_revenue:,.0f}"
 )
 
 #monthly revenue trend
