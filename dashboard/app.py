@@ -25,8 +25,12 @@ total_sessions = kpi_df["total_sessions"].iloc[0]
 total_orders = kpi_df["total_orders"].iloc[0]
 total_revenue = kpi_df["total_revenue"].iloc[0]
 
-col1, col2, col3, col4 = st.columns(4)
+metrics_df = pd.read_csv("data/business_metrics.csv")
 
+average_order_value = metrics_df["average_order_value"].iloc[0]
+session_conversion_rate = metrics_df["session_conversion_rate"].iloc[0]
+
+col1, col2, col3, col4, col5, col6 = st.columns(6)
 col1.metric(
     "Total Users",
     f"{total_users:,.0f}"
@@ -45,6 +49,16 @@ col3.metric(
 col4.metric(
     "Total Revenue",
     f"${total_revenue:,.0f}"
+)
+
+col5.metric(
+    "Average Order Value",
+    f"${average_order_value:.2f}"
+)
+
+col6.metric(
+    "Session Conversion Rate",
+    f"{session_conversion_rate:.2f}%"
 )
 
 #monthly revenue trend
@@ -127,8 +141,6 @@ st.dataframe(
 
 # Customer Purchasing Funnel
 
-st.subheader("Customer Purchasing Funnel")
-
 funnel_df = pd.read_csv("data/funnel_data.csv")
 
 funnel_data = pd.DataFrame({
@@ -141,8 +153,8 @@ funnel_data = pd.DataFrame({
     "Users": [
         funnel_df["product_viewers"].iloc[0],
         funnel_df["cart_users"].iloc[0],
-        funnel_df["cart_users"].iloc[0],
-        funnel_df["purchasers"].iloc[0]
+        funnel_df["checkout_users"].iloc[0],
+        funnel_df["purchasing_users"].iloc[0]
     ]
 })
 
