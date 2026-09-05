@@ -1,337 +1,70 @@
 # GA4 Business Analytics
 
-Business Analytics project using the **Google Analytics 4 (GA4) public ecommerce dataset**.
+An end-to-end business analytics project built with the Google Analytics 4 (GA4) public ecommerce dataset. It turns raw, event-level ecommerce data into SQL analysis, reusable CSV outputs, visualizations, and an interactive Streamlit dashboard.
 
-The project focuses on analyzing customer behavior, purchase funnels, traffic sources, product performance, sessions, and revenue to generate meaningful and actionable business insights.
+## Project goals
 
+- Understand customer behaviour and purchasing activity.
+- Measure revenue, sessions, orders, and conversion performance.
+- Identify purchasing-funnel drop-off points.
+- Evaluate product, acquisition-channel, and device performance.
+- Turn findings into practical business recommendations.
 
-## Tech Stack
+## Dashboard
 
-* SQL (Google BigQuery)
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* Plotly
-* SciPy
-* Streamlit
+The Streamlit dashboard presents:
 
+- Core business KPIs: users, sessions, orders, revenue, average order value, and session conversion rate.
+- Monthly revenue trend.
+- Revenue by acquisition source and device category.
+- Top products by revenue and units sold.
+- Customer purchasing funnel: Sessions → Product View → Add to Cart → Purchasing Users.
+- Business insights for revenue, customers, devices, and acquisition performance.
 
-## BigQuery Authentication
+## Key insights
 
-This project uses **Google Cloud Application Default Credentials (ADC)** to authenticate with BigQuery.
+- Desktop is the highest-revenue device category; mobile is the next largest opportunity for conversion and experience improvements.
+- Google is the strongest acquisition source by revenue in the dashboard output.
+- The funnel falls from 267,116 sessions to 61,252 product views, then 12,545 cart users, and 4,419 purchasing users. Product discovery and cart progression are the main conversion opportunities.
+- High-revenue products should be prioritised in campaigns, merchandising, and inventory planning.
 
-Credentials are configured locally and are **not stored in this repository**.
+> **Metric note:** `Total Orders` and `Purchasing Users` are different measures. One customer can place more than one order, so the order total can be higher than the number of purchasing users.
 
-To verify the BigQuery connection:
+## Tech stack
 
-```bash
-python python/bigquery_connection.py
-```
+- Google BigQuery and SQL
+- Python
+- Pandas and NumPy
+- Matplotlib and Plotly
+- Streamlit
 
-A successful connection will display:
-
-```text
-BigQuery connection successful: ga4-business-analytics
-```
-
-> **Security:** Never commit service-account keys, credential JSON files, API keys, or other sensitive credentials to GitHub.
-
-
-# Business Understanding
-
-The business understanding phase defines the business context, analytical direction, stakeholders, objectives, and success criteria for the project.
-
-### Completed
-
-* Business scenario
-* Business problem
-* Stakeholder analysis
-* Business objectives
-* Success metrics
-* KPI framework
-* Project scope
-* Assumptions
-* Business questions
-
-Detailed documentation:
-
-```text
-docs/01_business_understanding.md
-```
-
-
-# Data Understanding
-
-The data understanding phase focuses on understanding the GA4 dataset, schema, structure, and event-based data model.
-
-### Completed
-
-* GA4 dataset overview
-* GA4 schema analysis
-* Dataset structure analysis
-* Nested and repeated fields analysis
-* Event-based data model analysis
-
-Detailed documentation:
-
-```text
-docs/02_data_understanding.md
-```
-
-
-# SQL Analysis
-
-SQL analysis is performed using **Google BigQuery** and is organized into separate analytical modules.
-
-## 01. Data Overview
-
-```text
-sql/01_data_overview.sql
-```
-
-Analysis includes:
-
-* Dataset verification
-* Total events
-* Total users
-* Total days
-* Dataset date range
-* Total sessions
-* Total purchases
-* Total page views
-* New and returning users
-* Dataset size summary
-
-
-## 02. Event Analysis
-
-```text
-sql/02_event_analysis.sql
-```
-
-Analysis includes:
-
-* Event frequency
-* Event distribution
-* Unique users per event
-* Average events per user
-* Average events per day
-* Daily event trends
-
-
-## 03. Customer Analysis
-
-```text
-sql/03_customer_analysis.sql
-```
-
-Analysis includes:
-
-* Purchasing users
-* Non-purchasing users
-* Purchase count per customer
-* One-time vs repeat customers
-* Purchase frequency distribution
-* Average purchases per customer
-* Total revenue by customer
-* Average revenue per customer
-* Top customers by revenue
-
-
-## 04. Funnel Analysis
-
-```text
-sql/04_funnel_analysis.sql
-```
-
-Analysis includes:
-
-* Funnel users by stage
-* Funnel conversion rates
-* Overall purchase conversion rate
-* Funnel drop-off analysis
-
-
-## 05. Product Analysis
-
-```text
-sql/05_product_analysis.sql
-```
-
-Analysis includes:
-
-* Product-level performance
-* Top products by revenue
-* Top products by quantity sold
-* Revenue per unit
-
-
-## 06. Revenue Analysis
-
-```text
-sql/06_revenue_analysis.sql
-```
-
-Analysis includes:
-
-* Total revenue
-* Revenue by date
-* Monthly revenue trend
-* Average order value
-* Revenue by customer
-
-
-## 07. Session Analysis
-
-```text
-sql/07_session_analysis.sql
-```
-
-Analysis includes:
-
-* Total sessions
-* Sessions by date
-* Average sessions per user
-* Average events per session
-* Sessions by device
-* Sessions by traffic source
-* Sessions by country
-* Session conversion to purchase
-
-
-## 08. Traffic Source Analysis
-
-```text
-sql/08_traffic_source_analysis.sql
-```
-
-Analysis includes:
-
-* Revenue by traffic source
-* Traffic source performance
-* Acquisition source performance
-* Purchase rate by traffic source
-
-
-## 09. Business Analysis
-
-```text
-sql/09_business_analysis.sql
-```
-
-Business analysis combines key metrics from different analytical areas to answer practical business questions.
-
-Analysis includes:
-
-* Business KPIs
-* Revenue performance
-* Revenue by device
-* Revenue by traffic source
-* Acquisition performance
-* Customer purchasing behavior
-* Product performance
-* Purchase performance
-
-
-# Data Quality Validation
-
-Data quality validation is performed to ensure that the analytical results are reliable and consistent.
-
-### Completed Validation Checks
-
-* Missing value validation
-* Duplicate value validation
-* Event name validation
-* Revenue validation
-* Product/item validation
-* Quantity validation
-* Negative price validation
-* Negative revenue validation
-* Invalid quantity validation
-* Missing product name validation
-* Purchase item validation
-
-The validation process also identifies abnormal product quantities and missing item-level attributes before using the data for deeper analysis.
-
-
-# Python Analysis
-
-Python is used to extract analytical results, process datasets, and create business visualizations.
-
-Current Python workflow includes:
-
-* BigQuery data extraction
-* Pandas-based data processing
-* CSV-based analytical outputs
-* Matplotlib visualizations
-* Business performance analysis
-
-Main Python files:
-
-```text
-python/bigquery_connection.py
-python/ga4_analysis.py
-python/visualization.py
-```
-
-
-# Data Visualization
-
-Python-based visualizations are developed using **Matplotlib**, **Plotly**, and **Streamlit**.
-
-### Completed Visualizations
-
-* Monthly Revenue Trend
-* Top Products by Revenue
-* Acquisition Source Performance
-* Revenue by Device
-
-Visualization outputs are stored in:
-
-```text
-screenshots/
-```
-
-### Interactive Dashboard
-
-An interactive business analytics dashboard is being developed using **Streamlit**.
-
-The dashboard provides:
-
-* Business KPI overview
-* Revenue performance
-* Monthly revenue trend
-* Top products by revenue
-* Revenue by device
-* Acquisition source performance
-* Interactive business analysis
-
-
-
-# Project Structure
+## Project structure
 
 ```text
 ga4-business-analytics/
-│
-├── data/
-│   ├── monthly_revenue.csv
-│   ├── top_products_by_revenue.csv
-│   ├── acquisition_source_performance.csv
-│   └── revenue_by_device.csv
-│ 
 ├── dashboard/
-│   └── app.py
-│
+│   └── app.py                       # Streamlit dashboard
+├── data/
+│   ├── business_kpis.csv
+│   ├── business_metrics.csv
+│   ├── monthly_revenue.csv
+│   ├── source_performance.csv
+│   ├── revenue_by_device.csv
+│   ├── top_products.csv
+│   └── funnel_data.csv
 ├── docs/
 │   ├── 01_business_understanding.md
-│   └── 02_data_understanding.md
-│
+│   ├── 02_Data_Understanding.md
+│   └── 03_Business_Insights.md
 ├── python/
 │   ├── bigquery_connection.py
 │   ├── ga4_analysis.py
-│   └── visualization.py
-│
+│   └── visualisation.py
+├── screenshots/
+│   ├── monthly_revenue_trend.png
+│   ├── acquisition_source_performance.png
+│   ├── revenue_by_device.png
+│   └── top_products_by_revenue.png
 ├── sql/
 │   ├── 01_data_overview.sql
 │   ├── 02_event_analysis.sql
@@ -340,92 +73,84 @@ ga4-business-analytics/
 │   ├── 05_product_analysis.sql
 │   ├── 06_revenue_analysis.sql
 │   ├── 07_session_analysis.sql
-│   ├── 08_traffic_source_analysis.sql
-│   ├── 09_business_analysis.sql
+│   ├── 09_Business_analysis.sql
 │   └── Data_cleaning.sql
-|
-├── screenshots/
-│   ├── monthly_revenue_trend.png
-│   ├── top_products_by_revenue.png
-│   ├── acquisition_source_performance.png
-│   └── revenue_by_device.png
-│
-├── README.md
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
+## Setup and run
 
-# Project Status
+### 1. Clone the repository
 
-## Completed
+```bash
+git clone <your-repository-url>
+cd ga4-business-analytics
+```
 
-* BigQuery authentication and connection
-* GA4 dataset verification
-* Business understanding
-* Data understanding
-* GA4 schema analysis
-* Dataset structure analysis
-* Nested and repeated fields analysis
-* Event-based data model analysis
-* Dataset overview analysis
-* Event analysis
-* Customer analysis
-* Funnel analysis
-* Product analysis
-* Revenue analysis
-* Session analysis
-* Traffic source analysis
-* Business analysis SQL
-* Data quality validation
-* Python analysis setup
-* Initial business visualizations
-* Adding revenue performance analysis
-* Adding device-level revenue analysis
-* Adding acquisition source performance
-* Integrating analytical CSV outputs into Streamlit
+### 2. Create and activate a virtual environment
 
-## Current Phase
+**Windows PowerShell**
 
-The project is currently focused on completing the **interactive Streamlit business analytics dashboard**.
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-Current work includes:
+### 3. Install dependencies
 
-* Adding interactive business visualizations
-* Displaying key business KPIs
-* Validating dashboard results
-* Improving dashboard presentation
-* Preparing final business insights and recommendations
+```powershell
+python -m pip install -r requirements.txt streamlit
+```
 
+### 4. Run the dashboard
 
-# Next Steps
+```powershell
+streamlit run dashboard\app.py
+```
 
-* Complete the Streamlit dashboard
-* Add remaining business visualizations
-* Validate dashboard metrics against SQL results
-* Customer segmentation
-* Retention and cohort analysis
-* Data dictionary
-* Advanced business analytics
-* Business insights
-* Business recommendations
-* Final project documentation
-* Final GitHub cleanup and presentation
+Open `http://localhost:8501` in a browser. Keep the terminal running while you use the dashboard. Press `Ctrl + C` in the terminal to stop it.
 
+## BigQuery authentication
 
+The project uses Google Cloud Application Default Credentials (ADC). Credentials are configured locally and are not stored in the repository.
 
-# Project Goal
+To verify the connection:
 
-The goal of this project is to transform raw **GA4 ecommerce event data** into meaningful business insights.
+```powershell
+python python\bigquery_connection.py
+```
 
-The analysis helps stakeholders:
+Never commit service-account keys, credential JSON files, API keys, or other secrets.
 
-* Understand customer behavior
-* Identify purchase funnel bottlenecks
-* Evaluate acquisition channels
-* Analyze product performance
-* Understand device-level revenue performance
-* Identify valuable customer segments
-* Monitor revenue trends
-* Discover opportunities for business growth
+## SQL analysis
 
-Ultimately, the project aims to move from **raw event data → analytical insights → business recommendations**.
+The SQL folder contains modules for:
+
+- Data overview and event analysis
+- Customer and funnel analysis
+- Product and revenue analysis
+- Session and traffic-source analysis
+- Consolidated business analysis and data cleaning
+
+## Recommendations
+
+1. Improve product discovery and product-page engagement to move more sessions into product views.
+2. Simplify cart and checkout experiences to reduce funnel drop-off.
+3. Prioritise Google and other high-revenue acquisition channels when allocating marketing budget.
+4. Maintain the strong desktop experience while improving mobile conversion.
+5. Promote high-revenue products and review low-performing products for pricing, placement, or campaign opportunities.
+
+## Screenshots
+
+![Monthly Revenue Trend](screenshots/monthly_revenue_trend.png)
+
+![Acquisition Source Performance](screenshots/acquisition_source_performance.png)
+
+![Revenue by Device](screenshots/revenue_by_device.png)
+
+![Top Products by Revenue](screenshots/top_products_by_revenue.png)
+
+## Project status
+
+The core analysis, SQL modules, data-quality validation, Python outputs, and Streamlit dashboard are complete. Future enhancements may include customer segmentation, retention/cohort analysis, and a formal data dictionary.
