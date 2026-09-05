@@ -154,3 +154,7 @@ The SQL folder contains modules for:
 ## Project status
 
 The core analysis, SQL modules, data-quality validation, Python outputs, and Streamlit dashboard are complete. Future enhancements may include customer segmentation, retention/cohort analysis, and a formal data dictionary.
+
+## Author 
+
+Harmandeep Kaur
