@@ -145,16 +145,16 @@ funnel_df = pd.read_csv("data/funnel_data.csv")
 
 funnel_data = pd.DataFrame({
     "Stage": [
-        "View Item",
+        "Sessions",
+        "Product View",
         "Add to Cart",
-        "Begin Checkout",
         "Purchase"
     ],
     "Users": [
+        funnel_df["sessions"].iloc[0],
         funnel_df["product_viewers"].iloc[0],
         funnel_df["cart_users"].iloc[0],
-        funnel_df["checkout_users"].iloc[0],
-        funnel_df["purchasing_users"].iloc[0]
+        funnel_df["purchasers"].iloc[0]
     ]
 })
 
