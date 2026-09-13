@@ -1,21 +1,30 @@
 # Python
 __pycache__/
+*.py[cod]
 *.pyc
+
+# Virtual environments
 .venv/
+venv/
 env/
+
+# Environment variables and secrets
+.env
+.env.*
+*.json
+*.pem
+*.key
+.streamlit/secrets.toml
 
 # VS Code
 .vscode/
 
-# OS
+# Operating system files
 .DS_Store
 Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
-
-# BigQuery credentials
-*.json
 
 # Generated files
 *.xlsx
