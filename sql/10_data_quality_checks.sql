@@ -37,6 +37,7 @@ WHERE _TABLE_SUFFIX BETWEEN '20201101' AND '20201231'
   AND event_name = 'purchase'
   AND ecommerce.transaction_id IS NOT NULL
   AND ecommerce.transaction_id != ''
+  AND LOWER(ecommerce.transaction_id) NOT IN ('(not set)', 'not set')
 GROUP BY ecommerce.transaction_id
 HAVING COUNT(*) > 1
 ORDER BY purchase_event_count DESC;
