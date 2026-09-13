@@ -1,160 +1,214 @@
-# GA4 Business Analytics
+# GA4 E-commerce Business Analytics
 
-An end-to-end business analytics project built with the Google Analytics 4 (GA4) public ecommerce dataset. It turns raw, event-level ecommerce data into SQL analysis, reusable CSV outputs, visualizations, and an interactive Streamlit dashboard.
+End-to-end ecommerce analytics project built using the Google Analytics 4 public ecommerce dataset. The project uses BigQuery SQL, Python, and Streamlit to analyse customer behaviour, revenue, conversion funnels, traffic sources, products, devices, and user retention.
 
-## Project goals
+## Overview
 
-- Understand customer behaviour and purchasing activity.
-- Measure revenue, sessions, orders, and conversion performance.
-- Identify purchasing-funnel drop-off points.
-- Evaluate product, acquisition-channel, and device performance.
-- Turn findings into practical business recommendations.
+This project converts raw GA4 event-level data into business insights and recommendations.
 
-## Dashboard
+The analysis answers questions such as:
 
-The Streamlit dashboard presents:
+- How much revenue was generated?
+- Which products and acquisition channels perform best?
+- Where do users drop off in the purchase funnel?
+- Which device categories generate the most revenue?
+- Do newly acquired users return in the following month?
+- What actions can improve conversion, retention, and revenue?
 
-- Core business KPIs: users, sessions, orders, revenue, average order value, and session conversion rate.
-- Monthly revenue trend.
-- Revenue by acquisition source and device category.
-- Top products by revenue and units sold.
-- Customer purchasing funnel: Sessions → Product View → Add to Cart → Purchasing Users.
-- Business insights for revenue, customers, devices, and acquisition performance.
+## Tools and Technologies
 
-## Key insights
-
-- Desktop is the highest-revenue device category; mobile is the next largest opportunity for conversion and experience improvements.
-- Google is the strongest acquisition source by revenue in the dashboard output.
-- The funnel falls from 267,116 sessions to 61,252 product views, then 12,545 cart users, and 4,419 purchasing users. Product discovery and cart progression are the main conversion opportunities.
-- High-revenue products should be prioritised in campaigns, merchandising, and inventory planning.
-
-> **Metric note:** `Total Orders` and `Purchasing Users` are different measures. One customer can place more than one order, so the order total can be higher than the number of purchasing users.
-
-## Tech stack
-
-- Google BigQuery and SQL
+- Google BigQuery
+- SQL
 - Python
-- Pandas and NumPy
-- Matplotlib and Plotly
+- Pandas
+- NumPy
+- Matplotlib
+- Plotly
 - Streamlit
+- Git and GitHub
 
-## Project structure
+## Dataset
+
+Source table:
 
 ```text
+bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*
+Dataset period:
+November 2020 to December 2020
+The dataset contains GA4 event-level ecommerce data, including:
+- User and session identifiers
+- Events such as view_item, add_to_cart, begin_checkout, and purchase
+- Traffic-source attributes
+- Device and geographic information
+- Product and ecommerce transaction fields
+
+Key Findings
+Metric	Result
+Total Revenue	$304,815.00
+Unique Transactions	3,563
+Average Order Value	$70.27
+November First-Time Users	79,421
+Users Returning in December	4,651
+Month-One Retention	5.86%
+
+
+Funnel Performance
+Sessions:          267,116
+Product Views:      61,252
+Add-to-Cart Users:  12,545
+Purchasing Users:    4,419
+
+The main conversion opportunities are:
+1. Improving product discovery to increase product views.
+2. Reducing cart and checkout friction to increase completed purchases.
+3. Improving mobile shopping and checkout experience.
+4. Increasing return visits through retention campaigns.
+
+Business Recommendations
+- Improve site search, navigation, category pages, and product recommendations.
+- Optimise cart and checkout flow to reduce drop-off.
+- Focus marketing investment on high-revenue acquisition channels.
+- Improve mobile speed, usability, and checkout experience.
+- Use bundles, cross-selling, and upselling to increase average order value.
+- Use email campaigns, remarketing, and abandoned-cart reminders to improve retention.
+
+Data Quality Checks
+The project includes SQL checks for:
+- Daily event volume
+- Missing or invalid purchase records
+- Duplicate transaction IDs
+- Revenue and order reconciliation
+
+Key observations:
+- 173 purchase events had missing or invalid transaction IDs or missing/non-positive revenue.
+- (not set) appeared 583 times as a transaction ID and is treated as a placeholder rather than a valid transaction.
+- Some valid transaction IDs occurred more than once; transaction-level analysis therefore uses distinct valid transaction IDs where appropriate.
+
+
+Project Structure
 ga4-business-analytics/
 ├── dashboard/
-│   └── app.py                       # Streamlit dashboard
+│   └── app.py
 ├── data/
 │   ├── business_kpis.csv
 │   ├── business_metrics.csv
+│   ├── funnel_data.csv
 │   ├── monthly_revenue.csv
-│   ├── source_performance.csv
 │   ├── revenue_by_device.csv
-│   ├── top_products.csv
-│   └── funnel_data.csv
+│   ├── source_performance.csv
+│   └── top_products.csv
 ├── docs/
 │   ├── 01_business_understanding.md
 │   ├── 02_Data_Understanding.md
-│   └── 03_Business_Insights.md
+│   ├── 03_Business_Insights.md
+│   ├── 04_Metric_Glossary.md
+│   └── 05_Data_Limitations.md
 ├── python/
 │   ├── bigquery_connection.py
 │   ├── ga4_analysis.py
 │   └── visualisation.py
 ├── screenshots/
-│   ├── monthly_revenue_trend.png
 │   ├── acquisition_source_performance.png
+│   ├── monthly_revenue_trend.png
 │   ├── revenue_by_device.png
 │   └── top_products_by_revenue.png
 ├── sql/
-│   ├── 01_data_overview.sql
+│   ├── 00_data_cleaning.sql
+|   ├── 01_data_overview.sql
 │   ├── 02_event_analysis.sql
 │   ├── 03_customer_analysis.sql
 │   ├── 04_funnel_analysis.sql
 │   ├── 05_product_analysis.sql
 │   ├── 06_revenue_analysis.sql
 │   ├── 07_session_analysis.sql
+│   ├── 08_retention_cohort_analysis.sql
 │   ├── 09_Business_analysis.sql
-│   └── Data_cleaning.sql
+│   └── 10_data_quality_checks.sql 
 ├── requirements.txt
+├── .gitignore
 └── README.md
-```
 
-## Setup and run
+SQL Analysis
+File	Purpose
+01_data_overview.sql	Dataset overview and baseline metrics
+02_event_analysis.sql	Event-level user behaviour
+03_customer_analysis.sql	Customer and purchasing analysis
+04_funnel_analysis.sql	Purchase funnel and conversion analysis
+05_product_analysis.sql	Product revenue and performance
+06_revenue_analysis.sql	Revenue, orders, and average order value
+07_session_analysis.sql	Session and traffic-source analysis
+08_retention_cohort_analysis.sql	Monthly cohort retention analysis
+09_Business_analysis.sql	Consolidated business analysis
+10_data_quality_checks.sql	Data validation and quality checks
 
-### 1. Clone the repository
 
-```bash
-git clone <your-repository-url>
+Dashboard
+The Streamlit dashboard includes:
+- KPI summary
+- Monthly revenue trend
+- Revenue by acquisition source
+- Revenue by device
+- Top products by revenue
+- Customer purchase funnel
+- Business recommendations
+
+Run the dashboard locally:
+streamlit run dashboard\app.py
+
+Open the dashboard at:
+http://localhost:8501
+
+Setup
+Clone the repository
+git clone <YOUR_REPOSITORY_URL>
 cd ga4-business-analytics
-```
 
-### 2. Create and activate a virtual environment
-
-**Windows PowerShell**
-
-```powershell
+Create and activate a virtual environment
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-```
 
-### 3. Install dependencies
+Install dependencies
+python -m pip install -r requirements.txt
 
-```powershell
-python -m pip install -r requirements.txt streamlit
-```
-
-### 4. Run the dashboard
-
-```powershell
-streamlit run dashboard\app.py
-```
-
-Open `http://localhost:8501` in a browser. Keep the terminal running while you use the dashboard. Press `Ctrl + C` in the terminal to stop it.
-
-## BigQuery authentication
-
-The project uses Google Cloud Application Default Credentials (ADC). Credentials are configured locally and are not stored in the repository.
-
-To verify the connection:
-
-```powershell
+Verify BigQuery connection
 python python\bigquery_connection.py
-```
 
-Never commit service-account keys, credential JSON files, API keys, or other secrets.
+Run the dashboard
+streamlit run dashboard\app.py
 
-## SQL analysis
+Screenshots
+Monthly Revenue Trend
+screenshots/monthly_revenue_trend.png
 
-The SQL folder contains modules for:
+Acquisition Source Performance
+screenshots/acquisition_source_performance.png
 
-- Data overview and event analysis
-- Customer and funnel analysis
-- Product and revenue analysis
-- Session and traffic-source analysis
-- Consolidated business analysis and data cleaning
+Revenue by Device
+screenshot/revenue_by_device.png
 
-## Recommendations
+Top Products by Revenue
+screenshot/top_products_by_revenue.png
 
-1. Improve product discovery and product-page engagement to move more sessions into product views.
-2. Simplify cart and checkout experiences to reduce funnel drop-off.
-3. Prioritise Google and other high-revenue acquisition channels when allocating marketing budget.
-4. Maintain the strong desktop experience while improving mobile conversion.
-5. Promote high-revenue products and review low-performing products for pricing, placement, or campaign opportunities.
+Documentation
+- [Business Understanding](docs/01_business_understanding.md)
+- [Data Understanding](docs/02_Data_Understanding.md)
+- [Business Insights](docs/03_Business_Insights.md)
+- [Metric Glossary](docs/04_Metric_Glossary.md)
+- [Data Limitations](docs/05_Data_Limitations.md)
 
-## Screenshots
+Limitations
+- The dataset covers only November and December 2020.
+- GA4 user identifiers represent browsers or devices and may not represent one individual across multiple devices.
+- Ad blockers, cookie consent, and tracking issues can affect event capture.
+- Attribution in GA4 may differ from advertising-platform reports.
+- The available date range supports only month-one retention analysis.
 
-![Monthly Revenue Trend](screenshots/monthly_revenue_trend.png)
+Future Improvements
+- RFM customer segmentation
+- Customer lifetime value analysis
+- Retention cohort heatmap
+- Marketing attribution analysis
+- Automated tests and GitHub Actions workflow
 
-![Acquisition Source Performance](screenshots/acquisition_source_performance.png)
-
-![Revenue by Device](screenshots/revenue_by_device.png)
-
-![Top Products by Revenue](screenshots/top_products_by_revenue.png)
-
-## Project status
-
-The core analysis, SQL modules, data-quality validation, Python outputs, and Streamlit dashboard are complete. Future enhancements may include customer segmentation, retention/cohort analysis, and a formal data dictionary.
-
-## Author 
-
+## Author
 Harmandeep Kaur
